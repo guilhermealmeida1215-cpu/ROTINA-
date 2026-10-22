@@ -1,0 +1,202 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#232a6b"><title>Rotina+</title>
+<style>
+:root{
+  --bg:#f3f4fb;--ink:#1c1f3a;--muted:#6b7090;--card:#fff;--line:#e4e6f2;
+  --pri:#5b5bd6;--pri-d:#4747b8;--sun:#ffb347;--rose:#ff6f91;--coral:#d9434f;
+  --nav:rgba(255,255,255,.88);--shadow:0 6px 20px rgba(40,44,110,.08);
+}
+*{box-sizing:border-box}
+html{-webkit-tap-highlight-color:transparent}
+body{
+  margin:0;font:15px/1.5 ui-rounded,"SF Pro Rounded","Nunito","Segoe UI",system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);
+  background-image:radial-gradient(900px 340px at 50% -120px,rgba(124,92,255,.16),transparent 70%);
+  background-repeat:no-repeat;
+}
+main{max-width:680px;margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 16px calc(110px + env(safe-area-inset-bottom))}
+h1,h2,h3{letter-spacing:-.03em;font-weight:800;margin:0}
+h1{font-size:1.7rem;line-height:1.15}
+h2{font-size:1.1rem;margin:22px 0 10px}
+p{margin:.4rem 0 .9rem}
+a{color:var(--pri)}
+.muted{color:var(--muted);font-size:.86rem}
+.err{color:var(--coral);font-weight:600}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.top{margin-bottom:16px}
+.top small{display:block;color:var(--muted);font-size:.85rem;text-transform:capitalize;margin-top:2px}
+
+/* botões e campos */
+button,input,select{font:inherit;color:var(--ink);padding:11px 14px;min-height:44px;border:1.5px solid var(--line);border-radius:14px;background:var(--card)}
+input,select{width:100%;min-width:0}
+input:focus,select:focus{border-color:var(--pri);outline:none;box-shadow:0 0 0 4px rgba(91,91,214,.15)}
+button{cursor:pointer;font-weight:650;transition:transform .12s,background .15s,border-color .15s}
+button:active:not(:disabled){transform:scale(.96)}
+button:hover:not(:disabled){border-color:var(--pri)}
+button.p{background:linear-gradient(135deg,var(--pri),#7c5cff);color:#fff;border-color:transparent;box-shadow:0 6px 14px rgba(91,91,214,.3)}
+button.p:hover:not(:disabled){filter:brightness(1.07);border-color:transparent}
+button.ghost{background:transparent;color:var(--muted);min-height:38px;padding:7px 12px;font-size:.88rem}
+button:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+form.grid{display:grid;gap:10px;margin:8px 0 6px}
+form.grid label{display:grid;gap:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{border-radius:999px;padding:8px 14px;min-height:40px}
+
+/* nível: o destaque da tela */
+.lvl{
+  display:flex;align-items:center;gap:18px;margin:0 0 18px;padding:20px;border-radius:26px;color:#fff;
+  background:linear-gradient(135deg,#232a6b 0%,#5b3fd1 62%,#c1478f 120%);
+  box-shadow:0 14px 30px rgba(60,48,160,.32);
+}
+.ring{position:relative;width:100px;height:100px;flex:none}
+.ring i{position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--sun) calc(var(--p)*1%),rgba(255,255,255,.2) 0);
+  -webkit-mask:radial-gradient(farthest-side,#0000 calc(100% - 11px),#000 calc(100% - 10px));mask:radial-gradient(farthest-side,#0000 calc(100% - 11px),#000 calc(100% - 10px))}
+.ring b{position:absolute;inset:0;display:grid;place-content:center;text-align:center;font-size:2.5rem;line-height:1;font-weight:800}
+.ring b small{font-size:.68rem;font-weight:600;opacity:.8;margin-bottom:3px}
+.lvl h2{margin:0 0 4px;font-size:1.15rem}
+.lvl p{margin:0;opacity:.85;font-size:.9rem}
+
+/* barra */
+.bar{height:8px;background:rgba(120,125,170,.16);border-radius:20px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c,var(--pri));border-radius:20px;transition:width .35s}
+
+/* categorias */
+.cat-agua{--c:#2f9bff}.cat-alimentacao{--c:#ff8f2e}.cat-banheiro{--c:#a066ff}
+.cat-sono{--c:#5560e8}.cat-tarefa{--c:#19b387}.cat-outro{--c:#e0a82e}
+
+/* cartões */
+.it{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.it.done{border-color:var(--c,#19b387);background:linear-gradient(0deg,color-mix(in srgb,var(--c,#19b387) 9%,var(--card)),var(--card))}
+.task{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center}
+.tile{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:1.5rem;background:color-mix(in srgb,var(--c) 17%,transparent)}
+.task b{display:block;font-size:1rem;margin-bottom:1px}
+.task .bar{margin-top:9px}
+.task button{min-width:84px}
+.sum{display:flex;align-items:center;gap:12px;margin:0 2px 14px}
+.sum .bar{flex:1}
+.sum span{font-weight:700;font-size:.9rem;white-space:nowrap}
+.empty{text-align:center;padding:34px 20px}
+.empty span{font-size:3rem}
+.empty h2{margin:8px 0 4px}
+.empty button{margin-top:6px}
+.toast{margin:0 0 14px;padding:12px 16px;border-radius:16px;font-weight:700;color:#5a3d00;background:linear-gradient(135deg,#ffe3a3,#ffc46b);animation:pop .4s}
+@keyframes pop{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
+
+/* medalhas */
+.medals{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.m{text-align:center;padding:18px 10px;display:block}
+.m span{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 8px;border-radius:50%;font-size:2rem;background:linear-gradient(135deg,#ffe9b8,#ffc46b);box-shadow:0 6px 16px rgba(255,170,60,.4)}
+.m.off{box-shadow:none}
+.m.off span{background:rgba(120,125,170,.16);box-shadow:none;filter:grayscale(1);opacity:.55}
+.m.off b{color:var(--muted)}
+.m .muted{margin-top:3px}
+
+/* prêmios e desafios */
+.item{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.item .muted{display:block}
+.lock{opacity:.8}
+
+/* navegação inferior */
+nav{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom));
+  width:calc(100% - 24px);max-width:656px;display:flex;gap:4px;padding:6px;z-index:5;
+  background:var(--nav);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:24px;box-shadow:0 10px 30px rgba(40,44,110,.18);
+}
+nav button{flex:1;display:grid;justify-items:center;gap:0;padding:7px 4px;min-height:52px;border:0;border-radius:18px;background:transparent;color:var(--muted);font-size:.74rem;box-shadow:none}
+nav button span{font-size:1.25rem;line-height:1.3;filter:grayscale(1);opacity:.7}
+nav button.on{background:linear-gradient(135deg,rgba(91,91,214,.16),rgba(124,92,255,.1));color:var(--pri-d)}
+nav button.on span{filter:none;opacity:1}
+
+/* tela de entrada */
+.auth{min-height:calc(100vh - 80px);display:flex;flex-direction:column;justify-content:center}
+.hero{text-align:center;margin-bottom:22px}
+.logo{width:84px;height:84px;margin:0 auto 14px;border-radius:26px;display:grid;place-items:center;font-size:2.6rem;
+  background:linear-gradient(135deg,#232a6b,#5b3fd1 65%,#c1478f);box-shadow:0 14px 28px rgba(60,48,160,.35)}
+.hero h1{font-size:2.4rem}
+.hero p{max-width:340px;margin:8px auto 14px;color:var(--muted)}
+.hero .chips{justify-content:center}
+.hero .chips span{padding:6px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:.85rem;font-weight:600}
+.panel{background:var(--card);border:1.5px solid var(--line);border-radius:24px;padding:18px;box-shadow:var(--shadow)}
+
+@media(max-width:420px){
+  main{padding-left:12px;padding-right:12px}
+  .lvl{padding:16px;gap:14px}
+  .ring{width:88px;height:88px}.ring b{font-size:2.2rem}
+  .task{grid-template-columns:44px 1fr auto;gap:10px}
+  .tile{width:44px;height:44px}
+  .task button{min-width:0;padding:10px 12px}
+  .medals{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#10122a;--ink:#eceefc;--muted:#9da2c8;--card:#1a1d3d;--line:#2c3060;--pri:#9a9aff;--pri-d:#c3c3ff;--nav:rgba(26,29,61,.88);--shadow:0 6px 20px rgba(0,0,0,.3)}
+  body{background-image:radial-gradient(900px 340px at 50% -120px,rgba(124,92,255,.28),transparent 70%)}
+  input,select,button{background:#1a1d3d}
+  button.p{background:linear-gradient(135deg,#6a6af0,#8e6cff)}
+  button.ghost,nav button{background:transparent}
+  nav button.on{background:rgba(154,154,255,.16)}
+  .toast{color:#3b2800}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body><main id="app"></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script>
+const $=s=>document.querySelector(s),app=$('#app');let sb;
+window.addEventListener('error',e=>{app.textContent='Erro: '+e.message});
+if(typeof supabase==='undefined')app.textContent='Não consegui carregar a biblioteca do Supabase (sem internet ou bloqueio). Verifique a conexão e recarregue.';
+else if(!window.CFG||CFG.url.includes('SEU-PROJETO'))app.textContent='Falta configurar o config.js com a URL e a chave anon do seu projeto Supabase.';
+else sb=supabase.createClient(CFG.url,CFG.key);
+const E=(t,a={},...k)=>{const e=document.createElement(t);for(const[x,v]of Object.entries(a)){if(v==null)continue;x.startsWith('on')?e.addEventListener(x.slice(2),v):x==='class'?e.className=v:e.setAttribute(x,v)}k.flat().forEach(c=>e.append(c));return e};
+const CAT={agua:'💧 Água',alimentacao:'🍽️ Alimentação',banheiro:'🚻 Banheiro',sono:'😴 Sono',tarefa:'✅ Tarefa',outro:'⭐ Outro'};
+const ICO=k=>CAT[k].split(' ')[0],NOME=k=>CAT[k].split(' ').slice(1).join(' ');
+const TPL=[['Beber água','agua',2000,250,'ml',null],['Ir ao banheiro','banheiro',6,1,'vezes',null],['Ir dormir','sono',1,1,'ok','22:30'],['Almoçar','alimentacao',1,1,'ok','13:00']];
+let S={tab:'hoje',user:null,msg:''};
+const day=()=>new Date().toLocaleDateString('sv');
+async function boot(){const{data}=await sb.auth.getSession();S.user=data.session?.user||null;S.user?load():authView()}
+sb&&sb.auth.onAuthStateChange((_,s)=>{if(!s&&S.user){S.user=null;authView()}});
+function authView(){const em=E('input',{type:'email',placeholder:'Seu e-mail',required:'',autocomplete:'email'}),pw=E('input',{type:'password',placeholder:'Senha (mín. 8 caracteres)',minlength:'8',required:'',autocomplete:'current-password'}),msg=E('p',{class:'err'});
+ const go=async up=>{msg.textContent='';const r=up?await sb.auth.signUp({email:em.value,password:pw.value}):await sb.auth.signInWithPassword({email:em.value,password:pw.value});
+  if(r.error)return msg.textContent=r.error.message;if(up&&!r.data.session)return msg.textContent='Confirme o e-mail que enviamos e entre.';S.user=r.data.user;load()};
+ app.replaceChildren(E('div',{class:'auth'},
+  E('div',{class:'hero'},E('div',{class:'logo'},'🌱'),E('h1',{},'Rotina+'),E('p',{},'Transforme seu dia em um jogo: crie desafios, cumpra no horário e ganhe medalhas.'),
+   E('div',{class:'chips'},E('span',{},'💧 Água'),E('span',{},'😴 Sono'),E('span',{},'🍽️ Refeições'),E('span',{},'🏅 Medalhas'))),
+  E('div',{class:'panel'},E('form',{class:'grid',onsubmit:e=>{e.preventDefault();go(false)}},em,pw,E('button',{class:'p'},'Entrar'),E('button',{type:'button',onclick:()=>em.reportValidity()&&pw.reportValidity()&&go(true)},'Criar conta')),msg,
+   E('p',{class:'muted'},'Ao criar conta você aceita a ',E('a',{href:'privacidade.html'},'política de privacidade'),'.'))))}
+async function load(){const[p,c,l,b,u,r]=await Promise.all([sb.from('profiles').select('*').single(),sb.from('challenges').select('*').eq('active',true).order('created_at'),sb.from('daily_logs').select('*').eq('log_date',day()),sb.from('badges').select('*'),sb.from('user_badges').select('code'),sb.from('rewards').select('*').order('min_level')]);
+ S={...S,p:p.data,c:c.data||[],l:l.data||[],b:b.data||[],u:(u.data||[]).map(x=>x.code),r:r.data||[]};render()}
+function render(){const{p}=S,pct=(p.xp%200)/2;const tabs=[['hoje','🏠','Hoje'],['desafios','🎯','Desafios'],['medalhas','🏅','Medalhas'],['premios','🎁','Prêmios']];
+ const hoje=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
+ app.replaceChildren(E('div',{class:'row top'},E('div',{},E('h1',{},'Rotina+'),E('small',{},hoje)),E('button',{class:'ghost',onclick:()=>sb.auth.signOut()},'Sair')),
+  E('div',{class:'lvl'},E('div',{class:'ring',style:'--p:'+pct},E('i'),E('b',{},E('small',{},'nível'),p.level)),E('div',{style:'flex:1;min-width:0'},E('h2',{},p.xp+' pontos'),E('p',{},'Faltam '+(200-p.xp%200)+' para o nível '+(p.level+1)))),
+  S.msg?E('p',{class:/^(🏅|⬆️)/.test(S.msg)?'toast':'err'},S.msg):'',
+  views[S.tab](),
+  E('nav',{},tabs.map(([k,i,n])=>E('button',{class:S.tab===k?'on':'',onclick:()=>{S.tab=k;S.msg='';render();scrollTo(0,0)}},E('span',{},i),n))))}
+const log=id=>S.l.find(x=>x.challenge_id===id);
+async function add(c){const cur=log(c.id)?.value||0,v=Math.min(Number(cur)+Number(c.step),Number(c.target)*3),was=S.p.level,done=log(c.id)?.completed;
+ const{error}=await sb.from('daily_logs').upsert({challenge_id:c.id,log_date:day(),value:v},{onConflict:'challenge_id,log_date'});if(error)S.msg=error.message;
+ const ob=S.u.length;await load();if(!done&&S.u.length>ob)S.msg='🏅 Nova medalha conquistada!';else if(S.p.level>was)S.msg='⬆️ Subiu para o nível '+S.p.level+'!';render()}
+const views={
+ hoje(){if(!S.c.length)return E('div',{class:'it empty'},E('span',{},'🌱'),E('h2',{},'Seu dia começa aqui'),E('p',{class:'muted'},'Crie seu primeiro desafio e comece a ganhar pontos.'),E('button',{class:'p',onclick:()=>{S.tab='desafios';render()}},'Criar desafio'));
+  const nd=S.c.filter(c=>log(c.id)?.completed).length;
+  return E('div',{},E('div',{class:'sum'},E('span',{},nd+' de '+S.c.length+' concluídos'),E('div',{class:'bar'},E('i',{style:'width:'+nd/S.c.length*100+'%'}))),
+   S.c.map(c=>{const g=log(c.id),v=Number(g?.value||0),d=g?.completed;
+    return E('div',{class:'it task cat-'+c.category+(d?' done':'')},E('div',{class:'tile'},ICO(c.category)),
+     E('div',{},E('b',{},c.title),E('span',{class:'muted'},v+' / '+c.target+' '+c.unit+(d?(g.on_time?' · no horário ✓':' · fora do horário'):(c.due_time?' · até '+c.due_time.slice(0,5):''))),E('div',{class:'bar'},E('i',{style:'width:'+Math.min(100,v/c.target*100)+'%'}))),
+     E('button',{class:'p',disabled:d?'':null,onclick:()=>add(c)},d?'Feito ✓':'+ '+c.step+' '+c.unit))}))},
+ desafios(){const f=(n,t,o={})=>E('input',{name:n,type:t,placeholder:o.ph||'',required:o.r?'':null,step:'any',min:o.min||null,maxlength:o.ml||null});
+  const t=f('title','text',{ph:'Nome do desafio',r:1,ml:80}),tg=f('target','number',{ph:'Meta diária',r:1,min:'0.01'}),st=f('step','number',{ph:'Quanto soma por toque',min:'0.01'}),un=f('unit','text',{ph:'Unidade (ml, vezes...)',ml:20}),tm=f('due','time'),ct=E('select',{},Object.entries(CAT).map(([k,v])=>E('option',{value:k},v)));
+  const ins=async o=>{const{error}=await sb.from('challenges').insert(o);S.msg=error?error.message:'';load()};
+  return E('div',{},E('h2',{style:'margin-top:4px'},'Atalhos rápidos'),E('div',{class:'chips'},TPL.map(x=>E('button',{onclick:()=>ins({title:x[0],category:x[1],target:x[2],step:x[3],unit:x[4],due_time:x[5]})},ICO(x[1])+' '+x[0]))),
+   E('h2',{},'Novo desafio'),
+   E('div',{class:'panel'},E('form',{class:'grid',style:'margin:0',onsubmit:e=>{e.preventDefault();ins({title:t.value.trim(),category:ct.value,target:+tg.value,step:+st.value||1,unit:un.value||'vez',due_time:tm.value||null})}},t,ct,tg,st,un,E('label',{class:'muted'},'Horário limite (opcional)',tm),E('button',{class:'p'},'Criar desafio'))),
+   S.c.length?E('h2',{},'Seus desafios'):'',
+   S.c.map(c=>E('div',{class:'it item cat-'+c.category},E('span',{class:'row',style:'justify-content:flex-start'},E('span',{class:'tile'},ICO(c.category)),E('span',{},E('b',{},c.title),E('span',{class:'muted'},c.target+' '+c.unit+(c.due_time?' · até '+c.due_time.slice(0,5):'')))),E('button',{onclick:async()=>{await sb.from('challenges').update({active:false}).eq('id',c.id);load()}},'Arquivar'))))},
+ medalhas(){const n=S.b.filter(b=>S.u.includes(b.code)).length;
+  return E('div',{},E('p',{class:'muted'},n+' de '+S.b.length+' medalhas conquistadas'),E('div',{class:'medals'},S.b.map(b=>E('div',{class:'it m'+(S.u.includes(b.code)?'':' off')},E('span',{},b.icon),E('div',{},E('b',{},b.name)),E('div',{class:'muted'},b.description)))))},
+ premios(){const t=E('input',{placeholder:'Meu prêmio (ex.: sorvete)',required:'',maxlength:'80'}),n=E('input',{type:'number',min:'1',value:'2',title:'Nível necessário'});
+  return E('div',{},E('div',{class:'panel'},E('form',{class:'grid',style:'margin:0',onsubmit:async e=>{e.preventDefault();await sb.from('rewards').insert({title:t.value.trim(),min_level:+n.value});load()}},t,E('label',{class:'muted'},'Nível necessário',n),E('button',{class:'p'},'Criar prêmio'))),
+   E('h2',{},'Seus prêmios'),
+   S.r.map(r=>{const ok=S.p.level>=r.min_level;return E('div',{class:'it item'+(ok||r.claimed_at?'':' lock')},E('span',{},E('b',{},'🎁 '+r.title),E('span',{class:'muted'},'Nível '+r.min_level)),r.claimed_at?E('span',{class:'muted'},'Resgatado ✓'):E('button',{class:ok?'p':'',disabled:ok?null:'',onclick:async()=>{await sb.from('rewards').update({claimed_at:new Date().toISOString()}).eq('id',r.id);load()}},ok?'Resgatar':'🔒 Bloqueado'))}))}};
+if(sb)boot();
+</script></body></html>
